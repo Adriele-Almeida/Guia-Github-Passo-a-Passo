@@ -1,0 +1,425 @@
+import React, { useState } from 'react';
+import { ChevronDown, ChevronUp, Rocket, Code, Github, CheckCircle, Copy, Eye, EyeOff } from 'lucide-react';
+
+const GuiaInterativo = () => {
+  const [expandedSections, setExpandedSections] = useState({});
+  const [completedSteps, setCompletedSteps] = useState({});
+  const [showCode, setShowCode] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const toggleSection = (id) => {
+    setExpandedSections(prev => ({
+      ...prev,
+      [id]: !prev[id]
+    }));
+  };
+
+  const markComplete = (id) => {
+    setCompletedSteps(prev => ({
+      ...prev,
+      [id]: !prev[id]
+    }));
+  };
+
+  const copyCode = () => {
+    const codeContent = `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Primeiro Projeto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+        h1 {
+            text-align: center;
+            animation: fadeIn 1s ease-in;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin: 20px auto;
+            transition: transform 0.3s;
+        }
+        button:hover {
+            transform: scale(1.1);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Meu Site está no Ar!</h1>
+        <p>Este é meu primeiro projeto publicado no GitHub.</p>
+        <button onclick="alert('Parabéns! Você conseguiu!')">Clique Aqui</button>
+    </div>
+</body>
+</html>`;
+    
+    navigator.clipboard.writeText(codeContent);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const sections = [
+    {
+      id: 'intro',
+      title: '🎯 O Que Vamos Fazer?',
+      icon: <Rocket className="w-6 h-6" />,
+      content: (
+        <div className="space-y-4">
+          <p className="text-lg">Você vai aprender a criar um arquivo HTML e publicá-lo no GitHub para que qualquer pessoa possa ver na internet!</p>
+          <div className="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
+            <p className="font-semibold text-blue-900">Por que isso é importante?</p>
+            <ul className="mt-2 space-y-2 text-blue-800">
+              <li>✓ GitHub é onde desenvolvedores guardam seus projetos</li>
+              <li>✓ Você pode mostrar seu trabalho para o mundo</li>
+              <li>✓ É grátis e fácil de usar</li>
+              <li>✓ Empresas valorizam quem tem projetos no GitHub</li>
+            </ul>
+          </div>
+        </div>
+      )
+    },
+    {
+      id: 'passo1',
+      title: 'Passo 1: Criar o Arquivo HTML',
+      icon: <Code className="w-6 h-6" />,
+      content: (
+        <div className="space-y-4">
+          <div className="bg-purple-50 p-4 rounded-lg">
+            <p className="font-semibold text-purple-900 mb-3">O que você precisa fazer:</p>
+            <ol className="space-y-3 text-purple-800">
+              <li>1. Abra o <strong>Bloco de Notas</strong> (Windows) ou <strong>TextEdit</strong> (Mac)</li>
+              <li>2. Copie o código abaixo clicando no botão</li>
+              <li>3. Cole no Bloco de Notas</li>
+              <li>4. Salve como <strong>index.html</strong> (importante: tem que ser exatamente esse nome!)</li>
+            </ol>
+          </div>
+
+          <div className="bg-gray-100 p-4 rounded-lg">
+            <div className="flex justify-between items-center mb-3">
+              <p className="font-semibold text-gray-900">Seu Código HTML:</p>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setShowCode(!showCode)}
+                  className="flex items-center gap-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+                >
+                  {showCode ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  {showCode ? 'Ocultar' : 'Ver Código'}
+                </button>
+                <button
+                  onClick={copyCode}
+                  className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                >
+                  <Copy className="w-4 h-4" />
+                  {copied ? 'Copiado!' : 'Copiar Código'}
+                </button>
+              </div>
+            </div>
+            
+            {showCode && (
+              <pre className="bg-gray-900 text-green-400 p-4 rounded-lg overflow-x-auto text-sm">
+{`<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Meu Primeiro Projeto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, 
+                        #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+        }
+        h1 { text-align: center; }
+        button {
+            background: #4CAF50;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Meu Site está no Ar!</h1>
+        <button onclick="alert('Parabéns!')">
+            Clique Aqui
+        </button>
+    </div>
+</body>
+</html>`}
+              </pre>
+            )}
+          </div>
+
+          <div className="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-500">
+            <p className="font-semibold text-yellow-900">⚠️ Atenção:</p>
+            <p className="text-yellow-800 mt-2">Na hora de salvar, mude "Salvar como tipo" para <strong>"Todos os arquivos"</strong> e digite <strong>index.html</strong> como nome do arquivo.</p>
+          </div>
+        </div>
+      )
+    },
+    {
+      id: 'passo2',
+      title: 'Passo 2: Criar Conta no GitHub',
+      icon: <Github className="w-6 h-6" />,
+      content: (
+        <div className="space-y-4">
+          <div className="bg-indigo-50 p-4 rounded-lg">
+            <p className="font-semibold text-indigo-900 mb-3">Siga estes passos:</p>
+            <ol className="space-y-3 text-indigo-800">
+              <li>1. Acesse <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="underline font-bold">github.com</a></li>
+              <li>2. Clique em <strong>"Sign up"</strong> (Cadastrar)</li>
+              <li>3. Preencha:
+                <ul className="ml-6 mt-2 space-y-1">
+                  <li>• Seu email</li>
+                  <li>• Uma senha forte</li>
+                  <li>• Um nome de usuário (escolha bem, ele aparecerá na URL do seu site!)</li>
+                </ul>
+              </li>
+              <li>4. Confirme seu email (verifique sua caixa de entrada)</li>
+            </ol>
+          </div>
+
+          <div className="bg-green-50 p-4 rounded-lg">
+            <p className="font-semibold text-green-900">💡 Dica:</p>
+            <p className="text-green-800">Escolha um nome de usuário profissional. Exemplo: se seu nome é Maria Silva, use algo como "mariasilva" ou "maria-silva-dev".</p>
+          </div>
+        </div>
+      )
+    },
+    {
+      id: 'passo3',
+      title: 'Passo 3: Criar Repositório',
+      icon: <Github className="w-6 h-6" />,
+      content: (
+        <div className="space-y-4">
+          <div className="bg-pink-50 p-4 rounded-lg">
+            <p className="font-semibold text-pink-900 mb-3">Criando seu repositório:</p>
+            <ol className="space-y-3 text-pink-800">
+              <li>1. No GitHub, clique no <strong>botão verde "New"</strong> (ou ícone de +)</li>
+              <li>2. No campo "Repository name", digite: <strong>seu-usuario.github.io</strong>
+                <div className="bg-white p-3 rounded mt-2">
+                  <p className="text-sm">Exemplo: se seu usuário é "mariasilva", digite:</p>
+                  <p className="font-mono font-bold text-pink-900">mariasilva.github.io</p>
+                </div>
+              </li>
+              <li>3. Marque a opção <strong>"Public"</strong> (público)</li>
+              <li>4. Marque <strong>"Add a README file"</strong></li>
+              <li>5. Clique em <strong>"Create repository"</strong></li>
+            </ol>
+          </div>
+
+          <div className="bg-red-50 p-4 rounded-lg border-l-4 border-red-500">
+            <p className="font-semibold text-red-900">🚨 Muito importante:</p>
+            <p className="text-red-800">O nome do repositório PRECISA ser exatamente <strong>seu-usuario.github.io</strong> (com seu nome de usuário). É isso que faz o GitHub criar seu site automaticamente!</p>
+          </div>
+        </div>
+      )
+    },
+    {
+      id: 'passo4',
+      title: 'Passo 4: Fazer Upload do Arquivo',
+      icon: <Code className="w-6 h-6" />,
+      content: (
+        <div className="space-y-4">
+          <div className="bg-teal-50 p-4 rounded-lg">
+            <p className="font-semibold text-teal-900 mb-3">Enviando seu arquivo:</p>
+            <ol className="space-y-3 text-teal-800">
+              <li>1. Dentro do repositório que você criou, clique em <strong>"Add file"</strong></li>
+              <li>2. Clique em <strong>"Upload files"</strong></li>
+              <li>3. Arraste o arquivo <strong>index.html</strong> que você salvou OU clique em "choose your files"</li>
+              <li>4. Na parte de baixo, escreva uma mensagem. Exemplo: <em>"Meu primeiro site"</em></li>
+              <li>5. Clique no botão verde <strong>"Commit changes"</strong></li>
+            </ol>
+          </div>
+
+          <div className="bg-blue-50 p-4 rounded-lg">
+            <p className="font-semibold text-blue-900">⏰ Aguarde alguns minutos...</p>
+            <p className="text-blue-800 mt-2">O GitHub precisa de 2 a 5 minutos para processar e publicar seu site. Depois desse tempo, seu site estará no ar!</p>
+          </div>
+        </div>
+      )
+    },
+    {
+      id: 'passo5',
+      title: 'Passo 5: Ver Seu Site no Ar! 🎉',
+      icon: <CheckCircle className="w-6 h-6" />,
+      content: (
+        <div className="space-y-4">
+          <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-6 rounded-lg">
+            <p className="font-semibold text-purple-900 text-xl mb-3">🎊 Parabéns!</p>
+            <p className="text-purple-800 text-lg mb-4">Seu site está no ar! Acesse em:</p>
+            <div className="bg-white p-4 rounded-lg shadow-md">
+              <p className="font-mono text-purple-900 font-bold text-center">
+                https://seu-usuario.github.io
+              </p>
+              <p className="text-sm text-gray-600 text-center mt-2">
+                (substitua "seu-usuario" pelo seu nome de usuário do GitHub)
+              </p>
+            </div>
+          </div>
+
+          <div className="bg-green-50 p-4 rounded-lg">
+            <p className="font-semibold text-green-900 mb-2">✨ O que você pode fazer agora:</p>
+            <ul className="space-y-2 text-green-800">
+              <li>• Compartilhe o link do seu site com amigos</li>
+              <li>• Adicione no seu currículo ou LinkedIn</li>
+              <li>• Continue editando: faça upload de novos arquivos para atualizar</li>
+              <li>• Crie novos repositórios com outros projetos</li>
+            </ul>
+          </div>
+
+          <div className="bg-yellow-50 p-4 rounded-lg">
+            <p className="font-semibold text-yellow-900 mb-2">📝 Para editar seu site:</p>
+            <p className="text-yellow-800">
+              No GitHub, clique no arquivo index.html → clique no ícone de lápis para editar → faça suas mudanças → clique em "Commit changes"
+            </p>
+          </div>
+        </div>
+      )
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 p-6">
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-8 animate-fade-in">
+          <h1 className="text-4xl font-bold text-gray-800 mb-2">
+            🚀 Do Código ao GitHub
+          </h1>
+          <p className="text-xl text-gray-600">
+            Guia Completo para Iniciantes
+          </p>
+          <div className="mt-4 inline-block bg-blue-100 px-4 py-2 rounded-full">
+            <p className="text-blue-800 font-semibold">
+              ⏱️ Tempo estimado: 15-20 minutos
+            </p>
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          {sections.map((section, index) => (
+            <div
+              key={section.id}
+              className="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl"
+            >
+              <button
+                onClick={() => toggleSection(section.id)}
+                className="w-full p-6 flex items-center justify-between hover:bg-gray-50 transition-colors"
+              >
+                <div className="flex items-center gap-4">
+                  <div className={`p-3 rounded-lg ${
+                    completedSteps[section.id] 
+                      ? 'bg-green-100 text-green-600' 
+                      : 'bg-blue-100 text-blue-600'
+                  }`}>
+                    {completedSteps[section.id] ? <CheckCircle className="w-6 h-6" /> : section.icon}
+                  </div>
+                  <div className="text-left">
+                    <h2 className="text-xl font-bold text-gray-800">
+                      {section.title}
+                    </h2>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  {section.id !== 'intro' && (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        markComplete(section.id);
+                      }}
+                      className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
+                        completedSteps[section.id]
+                          ? 'bg-green-500 text-white'
+                          : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                      }`}
+                    >
+                      {completedSteps[section.id] ? '✓ Feito' : 'Marcar como feito'}
+                    </button>
+                  )}
+                  {expandedSections[section.id] ? (
+                    <ChevronUp className="w-6 h-6 text-gray-600" />
+                  ) : (
+                    <ChevronDown className="w-6 h-6 text-gray-600" />
+                  )}
+                </div>
+              </button>
+              
+              {expandedSections[section.id] && (
+                <div className="p-6 pt-0 animate-fade-in">
+                  <div className="border-t pt-6">
+                    {section.content}
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-8 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl p-8 text-center">
+          <h3 className="text-2xl font-bold mb-3">🎓 Você Conseguiu!</h3>
+          <p className="text-lg mb-4">
+            Agora você sabe criar um site e publicá-lo no GitHub!
+          </p>
+          <p className="text-purple-100">
+            Continue praticando e criando novos projetos. Quanto mais você fizer, melhor ficará!
+          </p>
+        </div>
+      </div>
+
+      <style>{`
+        @keyframes fade-in {
+          from {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-fade-in {
+          animation: fade-in 0.5s ease-out;
+        }
+      `}</style>
+    </div>
+  );
+};
+
+export default GuiaInterativo;
